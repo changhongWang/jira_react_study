@@ -3,9 +3,9 @@
  * @Author: changhong.wang
  * @Date: 2021-10-21 15:58:48
  * @LastEditors: changhong.wang
- * @LastEditTime: 2021-10-21 17:02:57
+ * @LastEditTime: 2021-10-21 18:13:15
  */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const isFalsy = (val) => (val === 0 ? false : !val);
 export const cleanObject = (obj) => {
@@ -26,4 +26,14 @@ export const useMount = () => {
   useEffect((callback) => {
     callback();
   }, []);
+};
+
+export const useDebounce = (value, delay) => {
+  const [debounceValue, setDebounceValue] = useState(value);
+  useEffect(() => {
+    let timeout = setTimeout(() => setDebounceValue(value), delay);
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+
+  return debounceValue;
 };
