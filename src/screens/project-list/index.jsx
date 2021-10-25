@@ -30,7 +30,6 @@ const ProjectListScreen = () => {
             }
         })
     }, [])
-    
 
     return <div>
         <SearchPanel param={param} setParam={setParam} userList={userList}/>
