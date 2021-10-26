@@ -3,7 +3,7 @@
  * @Author: changhong.wang
  * @Date: 2021-10-21 15:58:48
  * @LastEditors: changhong.wang
- * @LastEditTime: 2021-10-21 18:13:15
+ * @LastEditTime: 2021-10-26 17:35:26
  */
 import { useEffect, useState } from "react";
 
@@ -29,11 +29,13 @@ export const useMount = () => {
 };
 
 export const useDebounce = (value, delay) => {
-  const [debounceValue, setDebounceValue] = useState(value);
+  const [res, setRes] = useState(value);
   useEffect(() => {
-    let timeout = setTimeout(() => setDebounceValue(value), delay);
+    const timeout = setTimeout(() => {
+      setRes(value);
+    }, delay);
     return () => clearTimeout(timeout);
   }, [value, delay]);
 
-  return debounceValue;
+  return res;
 };
