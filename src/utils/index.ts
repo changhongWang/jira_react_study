@@ -51,3 +51,24 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 
   return res;
 };
+
+export const useArray = <P>(persons: P[]) => {
+  // hello，请把作业写在这里吧，写完记得再对照作业要求检查一下
+  const [personList, setPersonList] = useState<P[]>(persons);
+  return {
+    value: personList,
+    clear: () => {
+      setPersonList([]);
+    },
+    removeIndex: (index: number) => {
+      // 根据指定index 删除
+      const newPerson = [...personList];
+      newPerson.splice(index, 1);
+      console.log(newPerson, personList);
+      setPersonList(newPerson);
+    },
+    add: (item: P) => {
+      setPersonList([...personList, item]);
+    },
+  };
+};
