@@ -9,9 +9,11 @@ import { useState, useEffect } from "react";
 import qs from "querystring";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
-import { cleanObject, useDebounce } from "../../utils";
+import { cleanObject, useDebounce, testMode } from "../../utils";
 
 const apiUrl = process.env.REACT_APP_API_URL;
+const a = 5;
+console.log(testMode(a));
 
 const ProjectListScreen = () => {
   const [userList, setUserList] = useState([]);

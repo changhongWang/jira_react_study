@@ -23,6 +23,16 @@ export const cleanObject = (obj: object) => {
   return res;
 };
 
+// 直接export function - 带泛型
+// export function testMode<S>(type: S): [S] {
+//   return [type];
+// };
+
+// 箭头函数写法 - 带泛型
+export const testMode = <S>(type: S): [S] => {
+  return [type];
+};
+
 // 自定义Hook
 export const useMount = (callback: () => void) => {
   useEffect(() => {
@@ -30,7 +40,7 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
-export const useDebounce = (value: any, delay?: number) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [res, setRes] = useState(value);
   useEffect(() => {
     const timeout = setTimeout(() => {
