@@ -6,7 +6,7 @@
  * @LastEditTime: 2021-10-27 07:07:42
  */
 import { useState, useEffect } from "react";
-import qs from "querystring";
+import qs from "qs";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { cleanObject, useDebounce, testMode } from "../../utils";
