@@ -10,10 +10,9 @@ import qs from "qs";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { cleanObject, useDebounce, testMode } from "../../utils";
+import { useHttp } from "../../utils/http";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-const a = 5;
-console.log(testMode(a));
 
 const ProjectListScreen = () => {
   const [userList, setUserList] = useState([]);
@@ -22,23 +21,16 @@ const ProjectListScreen = () => {
     name: "",
     personId: "",
   });
+  const client = useHttp();
 
   const debouncedParam = useDebounce(param, 500);
   useEffect(() => {
-    fetch(
-      `${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`
-    ).then(async (res) => {
-      if (res.ok) {
-        setList(await res.json());
-      }
-    });
+    client("projects", {
+      data: cleanObject(debouncedParam),
+    }).then(setList);
   }, [debouncedParam]);
   useEffect(() => {
-    fetch(`${apiUrl}/users`).then(async (res) => {
-      if (res.ok) {
-        setUserList(await res.json());
-      }
-    });
+    client("users").then(setUserList);
   }, []);
 
   return (
