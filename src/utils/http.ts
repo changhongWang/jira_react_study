@@ -6,11 +6,13 @@ import { useAuth } from "../context/auth-context";
 // API地址
 const apiUrl = process.env.REACT_APP_API_URL;
 
+// config interface
 interface HttpConfig extends RequestInit {
   data?: object;
   token?: string;
 }
 
+// 抽离的公共http方法
 export const http = async (
   endpoint: string,
   { data, token, headers, ...customConfig }: HttpConfig = {}
