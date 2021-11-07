@@ -50,8 +50,7 @@ export const http = async (
   });
 };
 
-// 可以自动携带JWT Token的方法
-// 在调用方法时传入 user，变化时，自动监听token的改变
+// 可以自动携带JWT Token的方法 在调用方法时传入 user
 export const useHttp = () => {
   const { user } = useAuth();
   return (...[endpoint, config]: Parameters<typeof http>) =>
