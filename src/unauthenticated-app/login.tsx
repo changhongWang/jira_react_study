@@ -1,32 +1,49 @@
 import React, { FormEvent, useContext } from "react";
+import { Divider, Button, Form, Input } from "antd";
 import { useAuth } from "../context/auth-context";
 
 const LoginScreen = (props: any) => {
   const { login } = useAuth();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const username = (e.currentTarget.elements[0] as HTMLFormElement).value;
-    const password = (e.currentTarget.elements[1] as HTMLFormElement).value;
-    login({ username, password });
+  const handleSubmit = (values: { username: string; password: string }) => {
+    login(values);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <h3>登录</h3>
+      <h3>登录</h3>
+      <Divider />
+      <Form onFinish={handleSubmit}>
+        <Form.Item
+          label="用户名"
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "请输入用户名",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="密码"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "请输入密码",
+            },
+          ]}
+        >
+          <Input.Password type="password" placeholder="密码" id="password" />
+        </Form.Item>
         <div>
-          <label htmlFor="username">用户名</label>
-          <input type="text" id="username" />
+          <Button type="primary" htmlType="submit">
+            登录
+          </Button>
         </div>
-        <div>
-          <label htmlFor="password">密码</label>
-          <input type="password" id="password" />
-        </div>
-        <div>
-          <button type="submit">登录</button>
-        </div>
-      </form>
+      </Form>
     </>
   );
 };

@@ -7,12 +7,11 @@
  */
 import { useState, useEffect } from "react";
 import qs from "qs";
+import { Table } from "antd";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { cleanObject, useDebounce, testMode } from "../../utils";
 import { useHttp } from "../../utils/http";
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 const ProjectListScreen = () => {
   const [userList, setUserList] = useState([]);

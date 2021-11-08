@@ -5,6 +5,7 @@
  * @LastEditors: changhong.wang
  * @LastEditTime: 2021-10-26 19:34:46
  */
+import { Input, Select } from "antd";
 export interface User {
   id: string;
   name: string;
@@ -26,7 +27,7 @@ interface SearchProps {
 export const SearchPanel = ({ param, setParam, userList }: SearchProps) => {
   return (
     <form>
-      <input
+      <Input
         type="text"
         value={param.name}
         onChange={(e) =>
@@ -36,25 +37,24 @@ export const SearchPanel = ({ param, setParam, userList }: SearchProps) => {
           })
         }
       />
-      <select
+      <Select
         value={param.personId}
         onChange={(e) => {
-          console.log(e.target.value);
           setParam({
             ...param,
-            personId: e.target.value,
+            personId: e,
           });
         }}
       >
-        <option value={""}>负责人</option>
+        <Select.Option value={""}>负责人</Select.Option>
         {userList.map((user) => {
           return (
-            <option key={user.id} value={user.id}>
+            <Select.Option key={user.id} value={user.id}>
               {user.name}
-            </option>
+            </Select.Option>
           );
         })}
-      </select>
+      </Select>
     </form>
   );
 };

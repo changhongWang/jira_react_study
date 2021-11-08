@@ -5,6 +5,7 @@
  * @LastEditors: changhong.wang
  * @LastEditTime: 2021-10-26 19:35:15
  */
+import { Table } from "antd";
 import { User } from "./SearchPanel";
 
 interface Project {
@@ -22,21 +23,25 @@ interface ListProps {
 
 export const List = ({ list, userList }: ListProps) => {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>名称</th>
-          <th>负责人</th>
-        </tr>
-      </thead>
-      <tbody>
-        {list.map((item) => (
-          <tr key={item.id}>
-            <td>{item.name}</td>
-            <td>{userList.find((user) => user.id === item.personId)?.name}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <Table
+      columns={[
+        {
+          title: "名称",
+          dataIndex: "sys_name",
+          sorter: (a, b) => a.sys_name.localeCompare(b.sys_name),
+        },
+        {
+          title: "负责人",
+          dataIndex: "priciple",
+        },
+      ]}
+      dataSource={list.map((item, index) => {
+        return {
+          key: index,
+          sys_name: item.name,
+          priciple: userList.find((user) => user.id === item.personId)?.name,
+        };
+      })}
+    />
   );
 };
