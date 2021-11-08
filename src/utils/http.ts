@@ -59,3 +59,22 @@ export const useHttp = () => {
       token: user?.token,
     });
 };
+
+// ts test
+interface Person {
+  name: string;
+  gender: string;
+  address?: string;
+}
+
+const obj: Partial<Person> = {
+  name: "waang",
+  gender: "male",
+};
+
+type PersonKey = keyof Person;
+
+type T0 = Extract<"a" | "b" | "c" | "f", "a" | "f">;
+const abc: T0 = "f";
+type T1 = Extract<string | number | (() => void), Function>;
+//    ^?
