@@ -6,6 +6,8 @@
  * @LastEditTime: 2021-10-26 19:34:46
  */
 import { Input, Select } from "antd";
+import styled from "@emotion/styled";
+
 export interface User {
   id: string;
   name: string;
@@ -30,6 +32,7 @@ export const SearchPanel = ({ param, setParam, userList }: SearchProps) => {
       <Input
         type="text"
         value={param.name}
+        placeholder="项目名"
         onChange={(e) =>
           setParam({
             ...param,
@@ -37,7 +40,7 @@ export const SearchPanel = ({ param, setParam, userList }: SearchProps) => {
           })
         }
       />
-      <Select
+      {/* <Select
         value={param.personId}
         onChange={(e) => {
           setParam({
@@ -54,7 +57,7 @@ export const SearchPanel = ({ param, setParam, userList }: SearchProps) => {
             </Select.Option>
           );
         })}
-      </Select>
+      </Select> */}
     </form>
   );
 };

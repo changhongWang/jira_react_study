@@ -6,8 +6,6 @@
  * @LastEditTime: 2021-10-27 07:07:42
  */
 import { useState, useEffect } from "react";
-import qs from "qs";
-import { Table } from "antd";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { cleanObject, useDebounce, testMode } from "../../utils";
