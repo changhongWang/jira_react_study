@@ -1,6 +1,7 @@
 import React, { FormEvent, useContext } from "react";
 import { Divider, Button, Form, Input } from "antd";
 import { useAuth } from "../context/auth-context";
+import { LongButton } from "./index";
 
 const RegisterScreen = (props: any) => {
   const { register } = useAuth();
@@ -39,9 +40,9 @@ const RegisterScreen = (props: any) => {
           <Input.Password type="password" placeholder="密码" id="password" />
         </Form.Item>
         <div>
-          <Button type="primary" htmlType="submit">
+          <LongButton type="primary" htmlType="submit">
             注册并登录
-          </Button>
+          </LongButton>
         </div>
       </Form>
     </>
