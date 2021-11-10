@@ -6,6 +6,7 @@
  * @LastEditTime: 2021-10-27 07:07:42
  */
 import { useState, useEffect } from "react";
+import styled from "@emotion/styled";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { cleanObject, useDebounce, testMode } from "../../utils";
@@ -31,11 +32,16 @@ const ProjectListScreen = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
+      <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} userList={userList} />
       <List list={list} userList={userList} />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
 
 export default ProjectListScreen;

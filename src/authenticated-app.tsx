@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { Dropdown, Menu } from "antd";
 import { useAuth } from "./context/auth-context";
+import { ReactComponent as JiraLogo } from "./assets/software-logo.svg";
 import ProjectListScreen from "./screens/project-list";
-import logo from "./assets/logo.svg";
 import { User } from "./screens/project-list/SearchPanel";
 
 const AuthenticatedApp = () => {
@@ -12,16 +13,25 @@ const AuthenticatedApp = () => {
     <div>
       <Header>
         <CommonFlex>
-          <Logo />
+          <JiraLogo width="18rem" color="rgb(38, 132, 255)" />
           <TopMenuList>
             <TopMenuListItem>项目</TopMenuListItem>
             <TopMenuListItem>用户</TopMenuListItem>
           </TopMenuList>
         </CommonFlex>
-        {user && <a href="#">Hi, {user?.name}</a>}
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="logout">
+                <a onClick={logout}>登出</a>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+        </Dropdown>
       </Header>
       {/* <button onClick={logout}>登出</button> */}
-      <h1>项目列表</h1>
       <ProjectListScreen />
     </div>
   );
@@ -33,12 +43,6 @@ const CommonFlex = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-const Logo = styled.a`
-  display: inline-block;
-  width: 12rem;
-  height: 5rem;
-  background: url(${logo}) no-repeat 0 0 / contain;
 `;
 
 const TopMenuList = styled.ul`
@@ -56,6 +60,9 @@ const TopMenuListItem = styled.li`
 `;
 
 const Header = styled.header`
+  padding: 3.2rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
