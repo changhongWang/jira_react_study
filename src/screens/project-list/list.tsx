@@ -5,11 +5,11 @@
  * @LastEditors: changhong.wang
  * @LastEditTime: 2021-10-26 19:35:15
  */
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { User } from "./SearchPanel";
 
-interface Project {
+export interface Project {
   id: string;
   name: string;
   personId: string;
@@ -18,44 +18,50 @@ interface Project {
   created: number;
 }
 
-interface ListProps {
-  list: Project[];
+interface ListProps extends TableProps<Project> {
   userList: User[];
 }
 
-export const List = ({ list, userList }: ListProps) => {
+export const List = ({ userList, ...props }: ListProps) => {
   return (
     <Table
+      rowKey="id"
+      pagination={false}
       columns={[
         {
           title: "名称",
-          dataIndex: "sys_name",
-          sorter: (a, b) => a.sys_name.localeCompare(b.sys_name),
+          dataIndex: "name",
+          sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
           title: "部门",
-          dataIndex: "department",
+          dataIndex: "organization",
         },
         {
           title: "负责人",
-          dataIndex: "priciple",
+          render(val, project) {
+            return (
+              <span>
+                {userList.find((user) => user.id === project.personId)?.name ||
+                  "未知"}
+              </span>
+            );
+          },
         },
         {
           title: "创建时间",
-          dataIndex: "created",
+          render(val, project) {
+            return (
+              <span>
+                {project.created
+                  ? dayjs(project.created).format("YYYY-MM-DD")
+                  : "无"}
+              </span>
+            );
+          },
         },
       ]}
-      dataSource={list.map((item, index) => {
-        return {
-          key: index,
-          sys_name: item.name,
-          department: item.organization,
-          priciple: userList.find((user) => user.id === item.personId)?.name,
-          created: item.created
-            ? dayjs(item.created).format("YYYY-MM-DD")
-            : "无",
-        };
-      })}
+      {...props}
     />
   );
 };
