@@ -15,7 +15,6 @@ const LoginScreen = (props: any) => {
       <Divider />
       <Form onFinish={handleSubmit}>
         <Form.Item
-          label="用户名"
           name="username"
           rules={[
             {
@@ -24,10 +23,9 @@ const LoginScreen = (props: any) => {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="用户名" />
         </Form.Item>
         <Form.Item
-          label="密码"
           name="password"
           rules={[
             {
