@@ -7,16 +7,18 @@
  */
 import { useEffect, useState } from "react";
 
-export const isFalsy = (val: number) => (val === 0 ? false : !val);
-export const cleanObject = (obj: object) => {
+export const isFalsy = (val: unknown) => (val === 0 ? false : !val);
+
+export const isVoid = (val: unknown) =>
+  val === undefined || val === null || val === "";
+
+export const cleanObject = (obj: { [key: string]: unknown }) => {
   // 在一个函数里，改变传入的函数对象本身是不好的，不要污染传入的对象
   const res = { ...obj };
   Object.keys(res).forEach((key) => {
-    // @ts-ignore
     const value = res[key];
     console.log(key, value);
-    if (isFalsy(value)) {
-      // @ts-ignore
+    if (isVoid(value)) {
       delete res[key];
     }
   });
@@ -37,6 +39,8 @@ export const testMode = <S>(type: S): [S] => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
+    // Todo 这里依赖项如果加上callback会有问题，造成无限循环；与useCallback和useMemo有关
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 

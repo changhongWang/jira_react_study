@@ -17,13 +17,14 @@ const UnAuthenticatedApp = () => {
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
         {isRegister ? <RegisterScreen /> : <LoginScreen />}
         <Divider />
-        <a
+        <Button
+          type="link"
           onClick={() => {
             setIsRegister(!isRegister);
           }}
         >
           {isRegister ? "已经有账号了？直接登录" : "没有账号？去注册"}
-        </a>
+        </Button>
       </ShadowCard>
     </Container>
   );

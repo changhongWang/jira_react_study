@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Button } from "antd";
 import { useAuth } from "./context/auth-context";
 import { ReactComponent as JiraLogo } from "./assets/software-logo.svg";
 import ProjectListScreen from "./screens/project-list";
-import { User } from "./screens/project-list/SearchPanel";
 
 const AuthenticatedApp = () => {
   // 已登录
@@ -23,12 +22,16 @@ const AuthenticatedApp = () => {
           overlay={
             <Menu>
               <Menu.Item key="logout">
-                <a onClick={logout}>登出</a>
+                <Button type="link" onClick={logout}>
+                  登出
+                </Button>
               </Menu.Item>
             </Menu>
           }
         >
-          <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+          <Button type="link" onClick={(e) => e.preventDefault()}>
+            Hi, {user?.name}
+          </Button>
         </Dropdown>
       </Header>
       {/* <button onClick={logout}>登出</button> */}

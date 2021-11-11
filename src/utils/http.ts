@@ -67,14 +67,13 @@ interface Person {
   address?: string;
 }
 
-const obj: Partial<Person> = {
-  name: "waang",
-  gender: "male",
-};
+// const obj: Partial<Person> = {
+//   name: "waang",
+//   gender: "male",
+// };
 
-type PersonKey = keyof Person;
+// type PersonKey = keyof Person;
 
-type T0 = Extract<"a" | "b" | "c" | "f", "a" | "f">;
-const abc: T0 = "f";
-type T1 = Extract<string | number | (() => void), Function>;
-//    ^?
+// type T0 = Extract<"a" | "b" | "c" | "f", "a" | "f">;
+// const abc: T0 = "f";
+// type T1 = Extract<string | number | (() => void), Function>;

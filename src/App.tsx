@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import AuthenticatedApp from "./authenticated-app";
 import UnAuthenticatedApp from "./unauthenticated-app";
 import { useAuth } from "./context/auth-context";

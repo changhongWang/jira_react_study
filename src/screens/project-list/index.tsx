@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
-import { cleanObject, useDebounce, testMode } from "../../utils";
+import { cleanObject, useDebounce } from "../../utils";
 import { useHttp } from "../../utils/http";
 
 const ProjectListScreen = () => {
@@ -26,6 +26,7 @@ const ProjectListScreen = () => {
     client("projects", {
       data: cleanObject(debouncedParam),
     }).then(setList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedParam]);
   useEffect(() => {
     client("users").then(setUserList);
