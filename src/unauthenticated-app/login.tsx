@@ -1,12 +1,23 @@
 import { Divider, Form, Input } from "antd";
 import { useAuth } from "../context/auth-context";
 import { LongButton } from "./index";
+import { useAsync } from "../utils/useAsync";
 
 const LoginScreen = (props: any) => {
   const { login } = useAuth();
+  const { run, isLoading } = useAsync(undefined, {
+    throwOnError: true,
+  });
 
-  const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
+    try {
+      await run(login(values));
+    } catch (e) {
+      props.onError(e);
+    }
   };
 
   return (
@@ -37,7 +48,7 @@ const LoginScreen = (props: any) => {
           <Input.Password type="password" placeholder="密码" id="password" />
         </Form.Item>
         <div>
-          <LongButton type="primary" htmlType="submit">
+          <LongButton loading={isLoading} type="primary" htmlType="submit">
             登录
           </LongButton>
         </div>

@@ -1,12 +1,32 @@
 import { Divider, Form, Input } from "antd";
 import { useAuth } from "../context/auth-context";
 import { LongButton } from "./index";
+import { useAsync } from "../utils/useAsync";
 
-const RegisterScreen = (props: any) => {
+const RegisterScreen = ({ onError }: { onError: (e: Error) => void }) => {
   const { register } = useAuth();
+  const { run, isLoading } = useAsync(undefined, {
+    throwOnError: true,
+  });
 
-  const handleRegister = (values: { username: string; password: string }) => {
-    register(values);
+  const handleRegister = async ({
+    c_password,
+    ...values
+  }: {
+    username: string;
+    password: string;
+    c_password: string;
+  }) => {
+    // 确认密码逻辑
+    if (c_password !== values.password) {
+      onError(new Error("确认密码与密码不同"));
+      return;
+    }
+    try {
+      await run(register(values));
+    } catch (e) {
+      onError(e as Error);
+    }
   };
 
   return (
@@ -15,7 +35,6 @@ const RegisterScreen = (props: any) => {
       <Divider />
       <Form onFinish={handleRegister}>
         <Form.Item
-          label="用户名"
           name="username"
           rules={[
             {
@@ -27,7 +46,6 @@ const RegisterScreen = (props: any) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label="密码"
           name="password"
           rules={[
             {
@@ -38,8 +56,23 @@ const RegisterScreen = (props: any) => {
         >
           <Input.Password type="password" placeholder="密码" id="password" />
         </Form.Item>
+        <Form.Item
+          name="c_password"
+          rules={[
+            {
+              required: true,
+              message: "请确认密码",
+            },
+          ]}
+        >
+          <Input.Password
+            type="password"
+            placeholder="确认密码"
+            id="c_password"
+          />
+        </Form.Item>
         <div>
-          <LongButton type="primary" htmlType="submit">
+          <LongButton loading={isLoading} type="primary" htmlType="submit">
             注册并登录
           </LongButton>
         </div>
