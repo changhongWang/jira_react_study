@@ -3,12 +3,14 @@ import { useAuth } from "../context/auth-context";
 import { LongButton } from "./index";
 import { useAsync } from "../utils/useAsync";
 
+// 注册页面
 const RegisterScreen = ({ onError }: { onError: (e: Error) => void }) => {
   const { register } = useAuth();
   const { run, isLoading } = useAsync(undefined, {
     throwOnError: true,
   });
 
+  // 处理注册逻辑
   const handleRegister = async ({
     c_password,
     ...values
