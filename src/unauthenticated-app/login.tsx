@@ -3,12 +3,14 @@ import { useAuth } from "../context/auth-context";
 import { LongButton } from "./index";
 import { useAsync } from "../utils/useAsync";
 
+// 登录
 const LoginScreen = (props: any) => {
   const { login } = useAuth();
   const { run, isLoading } = useAsync(undefined, {
     throwOnError: true,
   });
 
+  // 处理登录提交后
   const handleSubmit = async (values: {
     username: string;
     password: string;
