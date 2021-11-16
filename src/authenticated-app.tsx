@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Dropdown, Menu, Button } from "antd";
 import { useAuth } from "./context/auth-context";
+import { resetRoute } from "./utils";
 import { ReactComponent as JiraLogo } from "./assets/software-logo.svg";
 import ProjectListScreen from "./screens/project-list";
 import { ProjectScreen } from "./screens/project";
@@ -30,7 +31,9 @@ const PageHeader = () => {
   return (
     <Header>
       <CommonFlex>
-        <JiraLogo width="18rem" color="rgb(38, 132, 255)" />
+        <Button type="link" onClick={resetRoute}>
+          <JiraLogo width="18rem" color="rgb(38, 132, 255)" />
+        </Button>
         <TopMenuList>
           <TopMenuListItem>项目</TopMenuListItem>
           <TopMenuListItem>用户</TopMenuListItem>
