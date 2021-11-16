@@ -76,3 +76,23 @@ export const useArray = <P>(persons: P[]) => {
     },
   };
 };
+
+/**
+ * 改变文档标题hooks
+ * @param title 需要改变的文档标题
+ * @param keepOnUnmount 是否需要在页面unmount时保留当前文档标题
+ */
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  const originTitle = document.title;
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+  useEffect(() => {
+    return () => {
+      !keepOnUnmount && (document.title = originTitle);
+    };
+  }, []);
+};

@@ -14,6 +14,7 @@ import { useHttp } from "../../utils/http";
 import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
+import { useDocumentTitle } from "../../utils";
 
 const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -25,6 +26,8 @@ const ProjectListScreen = () => {
   const debouncedParam = useDebounce(param, 500);
   const { data: list, isLoading, isError, error } = useProjects(debouncedParam);
   const { data: userList } = useUsers();
+
+  useDocumentTitle("项目列表");
 
   return (
     <Container>
