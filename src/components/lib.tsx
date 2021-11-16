@@ -35,7 +35,6 @@ export const FullPageLoading = () => (
 );
 
 export const FullPageErrorFallback = ({ error }: { error: Error | null }) => {
-  console.log(error, 888);
   return (
     <FullPage>
       <DevTools />
