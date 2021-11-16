@@ -5,7 +5,7 @@
  * @LastEditors: changhong.wang
  * @LastEditTime: 2021-10-27 07:07:19
  */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const isFalsy = (val: unknown) => (val === 0 ? false : !val);
 
@@ -86,7 +86,7 @@ export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
 ) => {
-  const originTitle = document.title;
+  const originTitle = useRef(document.title).current;
   useEffect(() => {
     document.title = title;
   }, [title]);
@@ -94,5 +94,5 @@ export const useDocumentTitle = (
     return () => {
       !keepOnUnmount && (document.title = originTitle);
     };
-  }, []);
+  }, [keepOnUnmount, originTitle]);
 };

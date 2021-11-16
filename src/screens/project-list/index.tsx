@@ -15,6 +15,7 @@ import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
+import Test from "./test";
 
 const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -32,6 +33,7 @@ const ProjectListScreen = () => {
   return (
     <Container>
       <h1>项目列表</h1>
+      <Test />
       <SearchPanel
         param={param}
         setParam={setParam}
