@@ -1,47 +1,59 @@
 import React from "react";
+import { Navigator, Route, Routes } from "react-router";
+import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Dropdown, Menu, Button } from "antd";
 import { useAuth } from "./context/auth-context";
 import { ReactComponent as JiraLogo } from "./assets/software-logo.svg";
 import ProjectListScreen from "./screens/project-list";
+import { ProjectScreen } from "./screens/project";
 
 const AuthenticatedApp = () => {
-  // 已登录
-  const { user, logout } = useAuth();
   return (
     <div>
-      <Header>
-        <CommonFlex>
-          <JiraLogo width="18rem" color="rgb(38, 132, 255)" />
-          <TopMenuList>
-            <TopMenuListItem>项目</TopMenuListItem>
-            <TopMenuListItem>用户</TopMenuListItem>
-          </TopMenuList>
-        </CommonFlex>
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key="logout">
-                <Button type="link" onClick={logout}>
-                  登出
-                </Button>
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <Button type="link" onClick={(e) => e.preventDefault()}>
-            Hi, {user?.name}
-          </Button>
-        </Dropdown>
-      </Header>
+      <PageHeader />
       {/* <button onClick={logout}>登出</button> */}
-      <ProjectListScreen />
+      <Router>
+        <Routes>
+          <Route path="/projects" element={<ProjectListScreen />} />
+          <Route path="/projects/:id/*" element={<ProjectScreen />} />
+        </Routes>
+      </Router>
     </div>
   );
 };
 
 export default AuthenticatedApp;
 
+const PageHeader = () => {
+  const { user, logout } = useAuth();
+  return (
+    <Header>
+      <CommonFlex>
+        <JiraLogo width="18rem" color="rgb(38, 132, 255)" />
+        <TopMenuList>
+          <TopMenuListItem>项目</TopMenuListItem>
+          <TopMenuListItem>用户</TopMenuListItem>
+        </TopMenuList>
+      </CommonFlex>
+      <Dropdown
+        overlay={
+          <Menu>
+            <Menu.Item key="logout">
+              <Button type="link" onClick={logout}>
+                登出
+              </Button>
+            </Menu.Item>
+          </Menu>
+        }
+      >
+        <Button type="link" onClick={(e) => e.preventDefault()}>
+          Hi, {user?.name}
+        </Button>
+      </Dropdown>
+    </Header>
+  );
+};
 const CommonFlex = styled.div`
   display: flex;
   justify-content: center;
