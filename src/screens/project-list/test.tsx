@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react";
 export default function Test() {
   const [times, setTimes] = useState<number>(0);
   useEffect(() => {
-    console.log("first次数", times);
+    // console.log("first次数", times);
   }, [times]);
 
-  console.log("times9", times);
+  //   console.log("times9", times);
   useEffect(() => {
-    console.log(times);
+    // console.log(times);
     return () => {
-      console.log("unload时次数:", times);
+      //   console.log("unload时次数:", times);
     };
   }, []);
   return (
