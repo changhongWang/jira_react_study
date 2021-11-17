@@ -16,15 +16,14 @@ import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
 import Test from "./test";
+import { useUrlQueryParam } from "../../utils/url";
 
 const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
   const client = useHttp();
 
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
   const debouncedParam = useDebounce(param, 500);
+  console.log(debouncedParam);
   const { data: list, isLoading, isError, error } = useProjects(debouncedParam);
   const { data: userList } = useUsers();
 
