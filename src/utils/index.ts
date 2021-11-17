@@ -17,7 +17,6 @@ export const cleanObject = (obj: { [key: string]: unknown }) => {
   const res = { ...obj };
   Object.keys(res).forEach((key) => {
     const value = res[key];
-    console.log(key, value);
     if (isVoid(value)) {
       delete res[key];
     }
