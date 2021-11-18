@@ -8,9 +8,10 @@
  */
 import React from "react";
 import { Input, Select, Form } from "antd";
+import IDSelect from "../../components/IDSelect";
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -44,24 +45,17 @@ export const SearchPanel = ({ param, setParam, userList }: SearchProps) => {
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <IDSelect
           value={param.personId}
           onChange={(e) => {
             setParam({
               ...param,
-              personId: e,
+              personId: e?.toString() || "",
             });
           }}
-        >
-          <Select.Option value={""}>负责人</Select.Option>
-          {userList.map((user) => {
-            return (
-              <Select.Option key={user.id} value={String(user.id)}>
-                {user.name}
-              </Select.Option>
-            );
-          })}
-        </Select>
+          defaultOptionName="负责人"
+          options={userList}
+        />
       </Form.Item>
     </Form>
   );
