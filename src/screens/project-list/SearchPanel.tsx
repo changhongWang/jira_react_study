@@ -9,6 +9,7 @@
 import React from "react";
 import { Input, Select, Form } from "antd";
 import IDSelect from "../../components/IDSelect";
+import { Project } from "./list";
 
 export interface User {
   id: number;
@@ -20,10 +21,7 @@ export interface User {
 }
 
 interface SearchProps {
-  param: {
-    name: string;
-    personId: string;
-  };
+  param: Partial<Pick<Project, "name" | "personId">>;
   setParam: (params: SearchProps["param"]) => void;
   userList: User[];
 }
@@ -47,10 +45,10 @@ export const SearchPanel = ({ param, setParam, userList }: SearchProps) => {
       <Form.Item>
         <IDSelect
           value={param.personId}
-          onChange={(e) => {
+          onChange={(value) => {
             setParam({
               ...param,
-              personId: e?.toString() || "",
+              personId: value,
             });
           }}
           defaultOptionName="负责人"

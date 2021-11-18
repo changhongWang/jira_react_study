@@ -17,14 +17,18 @@ import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
 import Test from "./test";
 import { useUrlQueryParam } from "../../utils/url";
+import { useProjectSearchParams } from "./util";
 
 const ProjectListScreen = () => {
   const client = useHttp();
 
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
-  const debouncedParam = useDebounce(param, 500);
-  console.log(debouncedParam);
-  const { data: list, isLoading, isError, error } = useProjects(debouncedParam);
+  const [param, setParam] = useProjectSearchParams();
+  const {
+    data: list,
+    isLoading,
+    isError,
+    error,
+  } = useProjects(useDebounce(param, 200));
   const { data: userList } = useUsers();
 
   useDocumentTitle("项目列表");
