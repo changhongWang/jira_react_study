@@ -9,6 +9,8 @@ import { Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { User } from "./SearchPanel";
+import { Pin } from "../../components/Pin";
+import { useEditProject } from "../../utils/project";
 
 // 接口
 export interface Project {
@@ -22,14 +24,31 @@ export interface Project {
 
 interface ListProps extends TableProps<Project> {
   userList: User[];
+  retry: () => void;
 }
 
 export const List = ({ userList, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+  const pinProject = (id: number) => (pin: boolean) => {
+    mutate({ id, pin });
+    props.retry();
+  };
   return (
     <Table
       rowKey="id"
       pagination={false}
       columns={[
+        {
+          title: <Pin checked={true} />,
+          render(val, project) {
+            return (
+              <Pin
+                checked={project.pin}
+                onCheckedChange={pinProject(project.id)}
+              />
+            );
+          },
+        },
         {
           title: "名称",
           sorter: (a, b) => a.name.localeCompare(b.name),

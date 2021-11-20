@@ -28,6 +28,7 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+  const [retry, setRetry] = useState(() => () => {});
 
   const setData = (data: D) =>
     setState({
@@ -74,6 +75,8 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    retry,
+    setRetry,
     ...state,
   };
 };

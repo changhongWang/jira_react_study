@@ -28,6 +28,7 @@ const ProjectListScreen = () => {
     isLoading,
     isError,
     error,
+    retry,
   } = useProjects(useDebounce(param, 200));
   const { data: userList } = useUsers();
 
@@ -49,6 +50,7 @@ const ProjectListScreen = () => {
         dataSource={list || []}
         userList={userList || []}
         loading={isLoading}
+        retry={retry}
       />
     </Container>
   );
