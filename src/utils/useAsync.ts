@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// useMemo & useCallback 在state保存函数的时候用
 interface State<D> {
   error: Error | null;
   data: D | null;
