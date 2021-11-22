@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from ".";
 
 // useMemo & useCallback 在state保存函数的时候用
 interface State<D> {
@@ -30,6 +31,7 @@ export const useAsync = <D>(
     ...initialState,
   });
   const [retry, setRetry] = useState(() => () => {});
+  const mounted = useMountedRef();
 
   const setData = (data: D) =>
     setState({
@@ -56,7 +58,7 @@ export const useAsync = <D>(
     });
     return promise
       .then((data) => {
-        setData(data);
+        mounted.current && setData(data);
         return data;
       })
       .catch((err) => {
