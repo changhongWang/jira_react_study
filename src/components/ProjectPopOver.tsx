@@ -6,9 +6,9 @@ import { useProjects } from "../utils/project";
 import { NoPaddingButton } from "./lib";
 
 export const ProjectPopOver = ({
-  setProjectModalOpen,
+  projectButton,
 }: {
-  setProjectModalOpen: () => void;
+  projectButton: JSX.Element;
 }) => {
   const { data: projects } = useProjects();
   const pinnedProjects = projects?.filter((project) => project.pin) || [];
@@ -24,9 +24,7 @@ export const ProjectPopOver = ({
         ))}
       </List>
       <Divider />
-      <NoPaddingButton type="link" onClick={setProjectModalOpen}>
-        创建项目
-      </NoPaddingButton>
+      {projectButton}
     </ContentContainer>
   );
 

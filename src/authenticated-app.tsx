@@ -17,13 +17,25 @@ const AuthenticatedApp = () => {
   const openProjectModal = () => setProjectModalOpen(true);
   return (
     <div>
-      <PageHeader setProjectModalOpen={openProjectModal} />
+      <PageHeader
+        projectButton={
+          <NoPaddingButton type="link" onClick={openProjectModal}>
+            创建项目
+          </NoPaddingButton>
+        }
+      />
       <Router>
         <Routes>
           <Route
             path="/projects"
             element={
-              <ProjectListScreen setProjectModalOpen={openProjectModal} />
+              <ProjectListScreen
+                projectButton={
+                  <Button type="default" onClick={openProjectModal}>
+                    创建项目
+                  </Button>
+                }
+              />
             }
           />
           <Route path="/projects/:id/*" element={<ProjectScreen />} />
@@ -39,11 +51,7 @@ const AuthenticatedApp = () => {
 
 export default AuthenticatedApp;
 
-const PageHeader = ({
-  setProjectModalOpen,
-}: {
-  setProjectModalOpen: () => void;
-}) => {
+const PageHeader = ({ projectButton }: { projectButton: JSX.Element }) => {
   const { user, logout } = useAuth();
   return (
     <Header>
@@ -53,7 +61,7 @@ const PageHeader = ({
         </NoPaddingButton>
         <TopMenuList>
           <TopMenuListItem>
-            <ProjectPopOver setProjectModalOpen={setProjectModalOpen} />
+            <ProjectPopOver projectButton={projectButton} />
           </TopMenuListItem>
           <TopMenuListItem>用户</TopMenuListItem>
         </TopMenuList>

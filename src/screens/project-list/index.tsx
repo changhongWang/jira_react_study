@@ -17,9 +17,9 @@ import { useDocumentTitle } from "../../utils";
 import { useProjectSearchParams } from "./util";
 
 const ProjectListScreen = ({
-  setProjectModalOpen,
+  projectButton,
 }: {
-  setProjectModalOpen: () => void;
+  projectButton: JSX.Element;
 }) => {
   const [param, setParam] = useProjectSearchParams();
   const {
@@ -37,9 +37,7 @@ const ProjectListScreen = ({
     <Container>
       <CommonFlex style={{ justifyContent: "space-between" }}>
         <h1>项目列表</h1>
-        <Button type="default" onClick={setProjectModalOpen}>
-          创建项目
-        </Button>
+        {projectButton}
       </CommonFlex>
       <SearchPanel
         param={param}
@@ -54,7 +52,7 @@ const ProjectListScreen = ({
         userList={userList || []}
         loading={isLoading}
         retry={retry}
-        setProjectModalOpen={setProjectModalOpen}
+        projectButton={projectButton}
       />
     </Container>
   );
