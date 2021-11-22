@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
@@ -8,34 +8,53 @@ import { resetRoute } from "./utils";
 import { ReactComponent as JiraLogo } from "./assets/software-logo.svg";
 import ProjectListScreen from "./screens/project-list";
 import { ProjectScreen } from "./screens/project";
+import { ProjectModal } from "./screens/project-list/project-modal";
+import { ProjectPopOver } from "./components/ProjectPopOver";
+import { NoPaddingButton } from "./components/lib";
 
 const AuthenticatedApp = () => {
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const openProjectModal = () => setProjectModalOpen(true);
   return (
     <div>
-      <PageHeader />
-      {/* <button onClick={logout}>登出</button> */}
+      <PageHeader setProjectModalOpen={openProjectModal} />
       <Router>
         <Routes>
-          <Route path="/projects" element={<ProjectListScreen />} />
+          <Route
+            path="/projects"
+            element={
+              <ProjectListScreen setProjectModalOpen={openProjectModal} />
+            }
+          />
           <Route path="/projects/:id/*" element={<ProjectScreen />} />
         </Routes>
       </Router>
+      <ProjectModal
+        onClose={() => setProjectModalOpen(false)}
+        projectModalOpen={projectModalOpen}
+      />
     </div>
   );
 };
 
 export default AuthenticatedApp;
 
-const PageHeader = () => {
+const PageHeader = ({
+  setProjectModalOpen,
+}: {
+  setProjectModalOpen: () => void;
+}) => {
   const { user, logout } = useAuth();
   return (
     <Header>
       <CommonFlex>
-        <Button type="link" onClick={resetRoute}>
+        <NoPaddingButton type="link" onClick={resetRoute}>
           <JiraLogo width="18rem" color="rgb(38, 132, 255)" />
-        </Button>
+        </NoPaddingButton>
         <TopMenuList>
-          <TopMenuListItem>项目</TopMenuListItem>
+          <TopMenuListItem>
+            <ProjectPopOver setProjectModalOpen={setProjectModalOpen} />
+          </TopMenuListItem>
           <TopMenuListItem>用户</TopMenuListItem>
         </TopMenuList>
       </CommonFlex>
@@ -57,7 +76,7 @@ const PageHeader = () => {
     </Header>
   );
 };
-const CommonFlex = styled.div`
+export const CommonFlex = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

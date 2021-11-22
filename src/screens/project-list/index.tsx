@@ -9,14 +9,18 @@ import styled from "@emotion/styled";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { useDebounce } from "../../utils";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
+import { CommonFlex } from "../../authenticated-app";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
-import Test from "./test";
 import { useProjectSearchParams } from "./util";
 
-const ProjectListScreen = () => {
+const ProjectListScreen = ({
+  setProjectModalOpen,
+}: {
+  setProjectModalOpen: () => void;
+}) => {
   const [param, setParam] = useProjectSearchParams();
   const {
     data: list,
@@ -31,8 +35,12 @@ const ProjectListScreen = () => {
 
   return (
     <Container>
-      <h1>项目列表</h1>
-      <Test />
+      <CommonFlex style={{ justifyContent: "space-between" }}>
+        <h1>项目列表</h1>
+        <Button type="default" onClick={setProjectModalOpen}>
+          创建项目
+        </Button>
+      </CommonFlex>
       <SearchPanel
         param={param}
         setParam={setParam}
@@ -46,6 +54,7 @@ const ProjectListScreen = () => {
         userList={userList || []}
         loading={isLoading}
         retry={retry}
+        setProjectModalOpen={setProjectModalOpen}
       />
     </Container>
   );
