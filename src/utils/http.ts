@@ -1,5 +1,6 @@
 // 封装fetch
 import qs from "qs";
+import { useCallback } from "react";
 import * as auth from "../auth-provider";
 import { useAuth } from "../context/auth-context";
 
@@ -53,11 +54,14 @@ export const http = async (
 // 可以自动携带JWT Token的方法 在调用方法时传入 user
 export const useHttp = () => {
   const { user } = useAuth();
-  return (...[endpoint, config]: Parameters<typeof http>) =>
-    http(endpoint, {
-      ...config,
-      token: user?.token,
-    });
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof http>) =>
+      http(endpoint, {
+        ...config,
+        token: user?.token,
+      }),
+    [user?.token]
+  );
 };
 
 // ts test

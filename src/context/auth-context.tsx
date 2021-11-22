@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import * as auth from "../auth-provider";
 import { User } from "../screens/project-list/SearchPanel";
 import { useMount } from "../utils";
@@ -49,9 +49,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
-  useMount(async () => {
-    run(initUser());
-  });
+  useMount(
+    useCallback(async () => {
+      run(initUser());
+    }, [run])
+  );
 
   if (isIdle || isLoading) {
     return <FullPageLoading />;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useMountedRef } from ".";
 
 // useMemo & useCallback 在state保存函数的时候用
@@ -33,12 +33,15 @@ export const useAsync = <D>(
   const [retry, setRetry] = useState(() => () => {});
   const mounted = useMountedRef();
 
-  const setData = (data: D) =>
-    setState({
-      data,
-      stat: "success",
-      error: null,
-    });
+  const setData = useCallback(
+    (data: D) =>
+      setState({
+        data,
+        stat: "success",
+        error: null,
+      }),
+    []
+  );
 
   const setError = (error: Error) =>
     setState({
@@ -48,27 +51,30 @@ export const useAsync = <D>(
     });
 
   // 用来触发异步请求
-  const run = (promise: Promise<D>) => {
-    if (!promise || !promise.then) {
-      throw new Error("请传入Promise类型数据");
-    }
-    setState({
-      ...state,
-      stat: "loading",
-    });
-    return promise
-      .then((data) => {
-        mounted.current && setData(data);
-        return data;
-      })
-      .catch((err) => {
-        setError(err);
-        if (config.throwOnError) {
-          return Promise.reject(err);
-        }
-        return err;
-      });
-  };
+  const run = useCallback(
+    (promise: Promise<D>) => {
+      if (!promise || !promise.then) {
+        throw new Error("请传入Promise类型数据");
+      }
+      setState((prevState) => ({
+        ...prevState,
+        stat: "loading",
+      }));
+      return promise
+        .then((data) => {
+          mounted.current && setData(data);
+          return data;
+        })
+        .catch((err) => {
+          setError(err);
+          if (config.throwOnError) {
+            return Promise.reject(err);
+          }
+          return err;
+        });
+    },
+    [config.throwOnError, mounted, setData]
+  );
 
   return {
     isIdle: state.stat === "idle",

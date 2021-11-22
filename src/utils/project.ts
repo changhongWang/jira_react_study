@@ -21,9 +21,7 @@ export const useProjects = (param?: Partial<Project>) => {
         })
       );
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param]);
+  }, [param, client, run, setRetry]);
 
   return result;
 };

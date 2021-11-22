@@ -39,8 +39,7 @@ export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
     // Todo 这里依赖项如果加上callback会有问题，造成无限循环；与useCallback和useMemo有关
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [callback]);
 };
 
 export const useDebounce = <V>(value: V, delay?: number) => {
