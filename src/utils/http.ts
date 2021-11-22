@@ -61,11 +61,11 @@ export const useHttp = () => {
 };
 
 // ts test
-interface Person {
-  name: string;
-  gender: string;
-  address?: string;
-}
+// interface Person {
+//   name: string;
+//   gender: string;
+//   address?: string;
+// }
 
 // const obj: Partial<Person> = {
 //   name: "waang",

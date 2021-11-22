@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-10-26 19:34:46
  */
 import React from "react";
-import { Input, Select, Form } from "antd";
+import { Input, Form } from "antd";
 import IDSelect from "../../components/IDSelect";
 import { Project } from "./list";
 

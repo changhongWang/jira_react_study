@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigator, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Dropdown, Menu, Button } from "antd";

@@ -5,23 +5,18 @@
  * @LastEditors: changhong.wang
  * @LastEditTime: 2021-10-27 07:07:42
  */
-import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { useDebounce } from "../../utils";
-import { useHttp } from "../../utils/http";
 import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
 import Test from "./test";
-import { useUrlQueryParam } from "../../utils/url";
 import { useProjectSearchParams } from "./util";
 
 const ProjectListScreen = () => {
-  const client = useHttp();
-
   const [param, setParam] = useProjectSearchParams();
   const {
     data: list,
