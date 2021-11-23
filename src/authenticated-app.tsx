@@ -11,6 +11,7 @@ import { ProjectScreen } from "./screens/project";
 import { ProjectModal } from "./screens/project-list/project-modal";
 import { ProjectPopOver } from "./components/ProjectPopOver";
 import { NoPaddingButton } from "./components/lib";
+import { TestUndo } from "./screens/TestUndo";
 
 const AuthenticatedApp = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
@@ -39,6 +40,7 @@ const AuthenticatedApp = () => {
             }
           />
           <Route path="/projects/:id/*" element={<ProjectScreen />} />
+          <Route path="/test" element={<TestUndo />} />
         </Routes>
       </Router>
       <ProjectModal
