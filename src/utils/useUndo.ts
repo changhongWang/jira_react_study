@@ -1,44 +1,40 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useReducer } from "react";
 
-export const useUndo = <T>(initialPresent: T) => {
-  const [state, setState] = useState<{
-    prev: T[];
-    present: T;
-    future: T[];
-  }>({
-    prev: [],
-    present: initialPresent,
-    future: [],
-  });
+const UNDO = "UNDO";
+const REDO = "REDO";
+const SET = "SET";
+const RESET = "RESET";
 
-  // 可回退/前进
-  const canUndo = state.prev.length !== 0;
-  const canRedo = state.future.length !== 0;
+type State<T> = {
+  prev: T[];
+  present: T;
+  future: T[];
+};
 
-  const undo = useCallback(() => {
-    setState((currState) => {
-      const { prev, present, future } = currState;
+type Action<T> = {
+  newPresent?: T;
+  type: typeof UNDO | typeof REDO | typeof SET | typeof RESET;
+};
+
+const undoReducer = <T>(state: State<T>, action: Action<T>) => {
+  const { prev, present, future } = state;
+  const { newPresent, type } = action;
+
+  switch (type) {
+    case UNDO: {
       if (prev.length === 0) {
         throw new Error("无法回退");
       }
       const previous = prev[prev.length - 1];
       const newPrev = prev.slice(0, prev.length - 1);
-      console.log({
-        prev: newPrev,
-        present: previous,
-        future: [present, ...future],
-      });
       return {
         prev: newPrev,
         present: previous,
         future: [present, ...future],
       };
-    });
-  }, [state]);
+    }
 
-  const redo = useCallback(() => {
-    setState((currState) => {
-      const { prev, present, future } = currState;
+    case REDO: {
       if (future.length === 0) {
         throw new Error("无法前进");
       }
@@ -49,36 +45,56 @@ export const useUndo = <T>(initialPresent: T) => {
         present: next,
         future: newFuture,
       };
-    });
+    }
+
+    case RESET: {
+      return {
+        ...state,
+        prev: [],
+        future: [],
+      };
+    }
+    case SET: {
+      if (newPresent === present) {
+        return state;
+      }
+      return {
+        prev: [...prev, present],
+        present: newPresent,
+        future: [],
+      };
+    }
+  }
+  return state;
+};
+
+export const useUndo = <T>(initialPresent: T) => {
+  const [state, dispatch] = useReducer(undoReducer, {
+    prev: [],
+    present: initialPresent,
+    future: [],
+  } as State<T>);
+
+  // 可回退/前进
+  const canUndo = state.prev.length !== 0;
+  const canRedo = state.future.length !== 0;
+
+  const undo = useCallback(() => {
+    dispatch({ type: "UNDO" });
+  }, [state]);
+
+  const redo = useCallback(() => {
+    dispatch({ type: "REDO" });
   }, []);
 
   // 清空
   const clear = useCallback(() => {
-    setState({
-      ...state,
-      prev: [],
-      future: [],
-    });
+    dispatch({ type: "RESET" });
   }, [state]);
 
   // 改变当前值
   const changePresent = useCallback((val: T) => {
-    setState((currState) => {
-      const { prev, present } = currState;
-      if (val === present) {
-        return currState;
-      }
-      console.log({
-        prev: [...prev, present],
-        present: val,
-        future: [],
-      });
-      return {
-        prev: [...prev, present],
-        present: val,
-        future: [],
-      };
-    });
+    dispatch({ type: "SET", newPresent: val });
   }, []);
 
   return {
