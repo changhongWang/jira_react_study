@@ -14,13 +14,9 @@ import { CommonFlex } from "../../authenticated-app";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
-import { useProjectSearchParams } from "./util";
+import { useProjectModal, useProjectSearchParams } from "./util";
 
-const ProjectListScreen = ({
-  projectButton,
-}: {
-  projectButton: JSX.Element;
-}) => {
+const ProjectListScreen = () => {
   const [param, setParam] = useProjectSearchParams();
   const {
     data: list,
@@ -33,11 +29,14 @@ const ProjectListScreen = ({
 
   useDocumentTitle("项目列表");
 
+  const { open } = useProjectModal();
   return (
     <Container>
       <CommonFlex style={{ justifyContent: "space-between" }}>
         <h1>项目列表</h1>
-        {projectButton}
+        <Button type="default" onClick={open}>
+          创建项目
+        </Button>
       </CommonFlex>
       <SearchPanel
         param={param}
@@ -52,7 +51,6 @@ const ProjectListScreen = ({
         userList={userList || []}
         loading={isLoading}
         retry={retry}
-        projectButton={projectButton}
       />
     </Container>
   );

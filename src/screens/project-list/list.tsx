@@ -12,6 +12,7 @@ import { User } from "./SearchPanel";
 import { Pin } from "../../components/Pin";
 import { useEditProject } from "../../utils/project";
 import { NoPaddingButton } from "../../components/lib";
+import { useProjectModal } from "./util";
 
 // 接口
 export interface Project {
@@ -26,11 +27,11 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   userList: User[];
   retry: () => void;
-  projectButton: JSX.Element;
 }
 
-export const List = ({ userList, projectButton, ...props }: ListProps) => {
+export const List = ({ userList, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+  const { open } = useProjectModal();
   const pinProject = (id: number) => (pin: boolean) => {
     mutate({ id, pin });
     props.retry();
@@ -91,7 +92,11 @@ export const List = ({ userList, projectButton, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key="edit">{projectButton}</Menu.Item>
+                    <Menu.Item key="edit">
+                      <NoPaddingButton type="link" onClick={open}>
+                        编辑
+                      </NoPaddingButton>
+                    </Menu.Item>
                   </Menu>
                 }
               >

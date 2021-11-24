@@ -12,48 +12,28 @@ import { ProjectModal } from "./screens/project-list/project-modal";
 import { ProjectPopOver } from "./components/ProjectPopOver";
 import { NoPaddingButton } from "./components/lib";
 import { TestUndo } from "./screens/TestUndo";
+import { useProjectModal } from "./screens/project-list/util";
 
 const AuthenticatedApp = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
-  const openProjectModal = () => setProjectModalOpen(true);
   return (
     <div>
-      <PageHeader
-        projectButton={
-          <NoPaddingButton type="link" onClick={openProjectModal}>
-            创建项目
-          </NoPaddingButton>
-        }
-      />
       <Router>
+        <PageHeader />
         <Routes>
-          <Route
-            path="/projects"
-            element={
-              <ProjectListScreen
-                projectButton={
-                  <Button type="default" onClick={openProjectModal}>
-                    创建项目
-                  </Button>
-                }
-              />
-            }
-          />
+          <Route path="/projects" element={<ProjectListScreen />} />
           <Route path="/projects/:id/*" element={<ProjectScreen />} />
           <Route path="/test" element={<TestUndo />} />
         </Routes>
+
+        <ProjectModal />
       </Router>
-      <ProjectModal
-        onClose={() => setProjectModalOpen(false)}
-        projectModalOpen={projectModalOpen}
-      />
     </div>
   );
 };
 
 export default AuthenticatedApp;
 
-const PageHeader = ({ projectButton }: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
   const { user, logout } = useAuth();
   return (
     <Header>
@@ -63,7 +43,7 @@ const PageHeader = ({ projectButton }: { projectButton: JSX.Element }) => {
         </NoPaddingButton>
         <TopMenuList>
           <TopMenuListItem>
-            <ProjectPopOver projectButton={projectButton} />
+            <ProjectPopOver />
           </TopMenuListItem>
           <TopMenuListItem>用户</TopMenuListItem>
         </TopMenuList>
