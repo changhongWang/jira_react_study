@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
 import { Dropdown, Menu, Button } from "antd";
 import { useAuth } from "./context/auth-context";
 import { resetRoute } from "./utils";
@@ -12,41 +13,30 @@ import { ProjectModal } from "./screens/project-list/project-modal";
 import { ProjectPopOver } from "./components/ProjectPopOver";
 import { NoPaddingButton } from "./components/lib";
 import { TestUndo } from "./screens/TestUndo";
+import { projectListActions } from "./screens/project-list/projectList.slice";
 
 const AuthenticatedApp = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
-  const openProjectModal = () => setProjectModalOpen(true);
+  const dispatch = useDispatch();
   return (
     <div>
       <PageHeader
         projectButton={
-          <NoPaddingButton type="link" onClick={openProjectModal}>
+          <NoPaddingButton
+            type="link"
+            onClick={() => dispatch(projectListActions.openProjectModal())}
+          >
             创建项目
           </NoPaddingButton>
         }
       />
       <Router>
         <Routes>
-          <Route
-            path="/projects"
-            element={
-              <ProjectListScreen
-                projectButton={
-                  <Button type="default" onClick={openProjectModal}>
-                    创建项目
-                  </Button>
-                }
-              />
-            }
-          />
+          <Route path="/projects" element={<ProjectListScreen />} />
           <Route path="/projects/:id/*" element={<ProjectScreen />} />
           <Route path="/test" element={<TestUndo />} />
         </Routes>
       </Router>
-      <ProjectModal
-        onClose={() => setProjectModalOpen(false)}
-        projectModalOpen={projectModalOpen}
-      />
+      <ProjectModal onClose={() => {}} />
     </div>
   );
 };
@@ -63,7 +53,7 @@ const PageHeader = ({ projectButton }: { projectButton: JSX.Element }) => {
         </NoPaddingButton>
         <TopMenuList>
           <TopMenuListItem>
-            <ProjectPopOver projectButton={projectButton} />
+            <ProjectPopOver />
           </TopMenuListItem>
           <TopMenuListItem>用户</TopMenuListItem>
         </TopMenuList>

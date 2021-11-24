@@ -3,13 +3,12 @@ import { Divider, Popover, Typography } from "antd";
 import { List } from "antd";
 import React from "react";
 import { useProjects } from "../utils/project";
+import { useDispatch } from "react-redux";
 import { NoPaddingButton } from "./lib";
+import { projectListActions } from "../screens/project-list/projectList.slice";
 
-export const ProjectPopOver = ({
-  projectButton,
-}: {
-  projectButton: JSX.Element;
-}) => {
+export const ProjectPopOver = () => {
+  const dispatch = useDispatch();
   const { data: projects } = useProjects();
   const pinnedProjects = projects?.filter((project) => project.pin) || [];
 
@@ -24,7 +23,12 @@ export const ProjectPopOver = ({
         ))}
       </List>
       <Divider />
-      {projectButton}
+      <NoPaddingButton
+        onClick={() => dispatch(projectListActions.openProjectModal)}
+        type="link"
+      >
+        创建项目
+      </NoPaddingButton>
     </ContentContainer>
   );
 

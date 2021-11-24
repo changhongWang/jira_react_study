@@ -55,7 +55,7 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
       };
     }
     case SET: {
-      if (newPresent === present) {
+      if (newPresent === present || !newPresent) {
         return state;
       }
       return {
@@ -65,7 +65,6 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
       };
     }
   }
-  return state;
 };
 
 export const useUndo = <T>(initialPresent: T) => {

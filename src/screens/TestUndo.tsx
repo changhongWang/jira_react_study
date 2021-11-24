@@ -21,6 +21,7 @@ export const TestUndo = () => {
         </button>
         <button
           onClick={() => {
+            // @ts-ignore
             changePresent(present - 1);
           }}
         >
@@ -29,6 +30,7 @@ export const TestUndo = () => {
         <button onClick={clear}>清空</button>
         <button
           onClick={() => {
+            // @ts-ignore
             changePresent(present + 1);
           }}
         >

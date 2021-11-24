@@ -5,6 +5,7 @@
  * @LastEditors: changhong.wang
  * @LastEditTime: 2021-10-27 07:07:42
  */
+import { useDispatch } from "react-redux";
 import styled from "@emotion/styled";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
@@ -15,12 +16,9 @@ import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
 import { useProjectSearchParams } from "./util";
+import { projectListActions } from "./projectList.slice";
 
-const ProjectListScreen = ({
-  projectButton,
-}: {
-  projectButton: JSX.Element;
-}) => {
+const ProjectListScreen = () => {
   const [param, setParam] = useProjectSearchParams();
   const {
     data: list,
@@ -30,6 +28,7 @@ const ProjectListScreen = ({
     retry,
   } = useProjects(useDebounce(param, 200));
   const { data: userList } = useUsers();
+  const dispatch = useDispatch();
 
   useDocumentTitle("项目列表");
 
@@ -37,7 +36,12 @@ const ProjectListScreen = ({
     <Container>
       <CommonFlex style={{ justifyContent: "space-between" }}>
         <h1>项目列表</h1>
-        {projectButton}
+        <Button
+          type="default"
+          onClick={() => dispatch(projectListActions.openProjectModal())}
+        >
+          创建项目
+        </Button>
       </CommonFlex>
       <SearchPanel
         param={param}
@@ -52,7 +56,6 @@ const ProjectListScreen = ({
         userList={userList || []}
         loading={isLoading}
         retry={retry}
-        projectButton={projectButton}
       />
     </Container>
   );

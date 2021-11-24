@@ -8,10 +8,12 @@
 import { Dropdown, Table, TableProps, Menu } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
 import { User } from "./SearchPanel";
 import { Pin } from "../../components/Pin";
 import { useEditProject } from "../../utils/project";
 import { NoPaddingButton } from "../../components/lib";
+import { projectListActions } from "./projectList.slice";
 
 // 接口
 export interface Project {
@@ -26,11 +28,11 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   userList: User[];
   retry: () => void;
-  projectButton: JSX.Element;
 }
 
-export const List = ({ userList, projectButton, ...props }: ListProps) => {
+export const List = ({ userList, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+  const dispatch = useDispatch();
   const pinProject = (id: number) => (pin: boolean) => {
     mutate({ id, pin });
     props.retry();
@@ -91,7 +93,16 @@ export const List = ({ userList, projectButton, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key="edit">{projectButton}</Menu.Item>
+                    <Menu.Item key="edit">
+                      <NoPaddingButton
+                        type="default"
+                        onClick={() =>
+                          dispatch(projectListActions.openProjectModal())
+                        }
+                      >
+                        创建项目
+                      </NoPaddingButton>
+                    </Menu.Item>
                   </Menu>
                 }
               >
