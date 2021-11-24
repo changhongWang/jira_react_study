@@ -1,4 +1,4 @@
-import { useCallback, useState, useReducer } from "react";
+import { useCallback, useReducer } from "react";
 
 const UNDO = "UNDO";
 const REDO = "REDO";
@@ -81,7 +81,7 @@ export const useUndo = <T>(initialPresent: T) => {
 
   const undo = useCallback(() => {
     dispatch({ type: "UNDO" });
-  }, [state]);
+  }, []);
 
   const redo = useCallback(() => {
     dispatch({ type: "REDO" });
@@ -90,15 +90,17 @@ export const useUndo = <T>(initialPresent: T) => {
   // 清空
   const clear = useCallback(() => {
     dispatch({ type: "RESET" });
-  }, [state]);
+  }, []);
 
   // 改变当前值
   const changePresent = useCallback((val: T) => {
     dispatch({ type: "SET", newPresent: val });
   }, []);
 
+  const retState = state as State<T>;
+
   return {
-    state,
+    state: retState,
     undo,
     canUndo,
     redo,

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
@@ -12,7 +11,6 @@ import { ProjectModal } from "./screens/project-list/project-modal";
 import { ProjectPopOver } from "./components/ProjectPopOver";
 import { NoPaddingButton } from "./components/lib";
 import { TestUndo } from "./screens/TestUndo";
-import { useProjectModal } from "./screens/project-list/util";
 
 const AuthenticatedApp = () => {
   return (

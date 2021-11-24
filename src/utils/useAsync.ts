@@ -90,7 +90,7 @@ export const useAsync = <D>(
           return err;
         });
     },
-    [config.throwOnError, setData, safeDispatch]
+    [config.throwOnError, setData, safeDispatch, setError]
   );
 
   return {
