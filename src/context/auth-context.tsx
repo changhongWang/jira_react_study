@@ -25,7 +25,6 @@ export const initUser = async () => {
 };
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  // const [user, setUser] = useState<User | null>(null);
   const { run, isLoading, isIdle, isError, error } = useAsync<User | null>();
 
   const dispatch: (...args: unknown[]) => Promise<User> = useDispatch();
