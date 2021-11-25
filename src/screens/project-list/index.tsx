@@ -9,7 +9,7 @@ import styled from "@emotion/styled";
 import { List } from "./list";
 import { SearchPanel } from "./SearchPanel";
 import { useDebounce } from "../../utils";
-import { Button, Typography } from "antd";
+import { Button } from "antd";
 import { CommonFlex } from "../../authenticated-app";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
@@ -19,12 +19,7 @@ import { ErrorBox } from "../../components/lib";
 
 const ProjectListScreen = () => {
   const [param, setParam] = useProjectSearchParams();
-  const {
-    data: list,
-    isLoading,
-    isError,
-    error,
-  } = useProjects(useDebounce(param, 200));
+  const { data: list, isLoading, error } = useProjects(useDebounce(param, 200));
   const { data: userList } = useUsers();
 
   useDocumentTitle("项目列表");

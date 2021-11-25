@@ -1,13 +1,9 @@
-import { useEffect } from "react";
-import { useAsync } from "./useAsync";
 import { Project } from "../screens/project-list/list";
-import { cleanObject } from "./index";
 import { useHttp } from "./http";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
-  const { run, ...result } = useAsync<Project[]>();
 
   return useQuery<Project[]>(["projects", param], () =>
     client("projects", { data: param })
