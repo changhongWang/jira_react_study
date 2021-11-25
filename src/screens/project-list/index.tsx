@@ -15,6 +15,7 @@ import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useDocumentTitle } from "../../utils";
 import { useProjectModal, useProjectSearchParams } from "./util";
+import { ErrorBox } from "../../components/lib";
 
 const ProjectListScreen = () => {
   const [param, setParam] = useProjectSearchParams();
@@ -23,7 +24,6 @@ const ProjectListScreen = () => {
     isLoading,
     isError,
     error,
-    retry,
   } = useProjects(useDebounce(param, 200));
   const { data: userList } = useUsers();
 
@@ -43,14 +43,11 @@ const ProjectListScreen = () => {
         setParam={setParam}
         userList={userList || []}
       />
-      {isError ? (
-        <Typography.Text type="danger">{error?.message}</Typography.Text>
-      ) : null}
+      <ErrorBox error={error} />
       <List
         dataSource={list || []}
         userList={userList || []}
         loading={isLoading}
-        retry={retry}
       />
     </Container>
   );

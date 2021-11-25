@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import left from "../assets/left.svg";
 import right from "../assets/right.svg";
 import logo from "../assets/logo.svg";
+import { ErrorBox } from "../components/lib";
 
 const UnAuthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState<boolean>(false);
@@ -16,9 +17,7 @@ const UnAuthenticatedApp = () => {
       <Background />
       <ShadowCard>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
-        {error ? (
-          <Typography.Text type="danger">{error.message}</Typography.Text>
-        ) : null}
+        <ErrorBox error={error} />
         {isRegister ? (
           <RegisterScreen onError={setError} />
         ) : (

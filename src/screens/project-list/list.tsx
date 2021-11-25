@@ -26,7 +26,6 @@ export interface Project {
 
 interface ListProps extends TableProps<Project> {
   userList: User[];
-  retry: () => void;
 }
 
 export const List = ({ userList, ...props }: ListProps) => {
@@ -34,7 +33,6 @@ export const List = ({ userList, ...props }: ListProps) => {
   const { open } = useProjectModal();
   const pinProject = (id: number) => (pin: boolean) => {
     mutate({ id, pin });
-    props.retry();
   };
   return (
     <Table

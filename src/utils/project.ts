@@ -3,27 +3,15 @@ import { useAsync } from "./useAsync";
 import { Project } from "../screens/project-list/list";
 import { cleanObject } from "./index";
 import { useHttp } from "./http";
+import { useQuery } from "react-query";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
-  const { run, setRetry, ...result } = useAsync<Project[]>();
+  const { run, ...result } = useAsync<Project[]>();
 
-  useEffect(() => {
-    run(
-      client("projects", {
-        data: cleanObject(param || {}),
-      })
-    );
-    setRetry(() => () => {
-      run(
-        client("projects", {
-          data: cleanObject(param || {}),
-        })
-      );
-    });
-  }, [param, client, run, setRetry]);
-
-  return result;
+  return useQuery<Project[]>(["projects", param], () =>
+    client("projects", { data: param })
+  );
 };
 
 // client(`projects/${params.id}`, {
