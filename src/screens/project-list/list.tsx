@@ -5,14 +5,15 @@
  * @LastEditors: changhong.wang
  * @LastEditTime: 2021-10-26 19:35:15
  */
-import { Dropdown, Table, TableProps, Menu } from "antd";
+import { Dropdown, Table, TableProps, Menu, Modal } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { User } from "./SearchPanel";
 import { Pin } from "../../components/Pin";
 import { useEditProject } from "../../utils/project";
 import { NoPaddingButton } from "../../components/lib";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectQueryKey } from "./util";
+import { useDeleteConfig } from "../../utils/useOptimisticOptions";
 
 // 接口
 export interface Project {
@@ -29,7 +30,7 @@ interface ListProps extends TableProps<Project> {
 }
 
 export const List = ({ userList, ...props }: ListProps) => {
-  const { mutate } = useEditProject();
+  const { mutate } = useEditProject(useProjectQueryKey());
   const { startEdit } = useProjectModal();
   const pinProject = (id: number) => (pin: boolean) => {
     mutate({ id, pin });
@@ -86,30 +87,49 @@ export const List = ({ userList, ...props }: ListProps) => {
         },
         {
           render(val, project) {
-            return (
-              <Dropdown
-                overlay={
-                  <Menu>
-                    <Menu.Item key="edit">
-                      <NoPaddingButton
-                        type="link"
-                        onClick={() => {
-                          startEdit(project.id);
-                        }}
-                      >
-                        编辑
-                      </NoPaddingButton>
-                    </Menu.Item>
-                  </Menu>
-                }
-              >
-                <NoPaddingButton type="link">...</NoPaddingButton>
-              </Dropdown>
-            );
+            return <More project={project} />;
           },
         },
       ]}
       {...props}
     />
+  );
+};
+
+const More = ({ project }: { project: Project }) => {
+  const { startEdit } = useProjectModal();
+  const { onMutate: deleteProject } = useDeleteConfig(useProjectQueryKey());
+  const ConfirmDel = (id: number) => {
+    Modal.confirm({
+      title: "确定删除该项？",
+      content: "点击确定删除",
+      okText: "确定",
+      onOk: () => {
+        deleteProject({ id });
+      },
+    });
+  };
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="edit">
+            <NoPaddingButton
+              type="link"
+              onClick={() => {
+                startEdit(project.id);
+              }}
+            >
+              编辑
+            </NoPaddingButton>
+          </Menu.Item>
+          <Menu.Item key="delete" onClick={() => ConfirmDel(project.id)}>
+            删除
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <NoPaddingButton type="link">...</NoPaddingButton>
+    </Dropdown>
   );
 };
