@@ -1,7 +1,6 @@
 import { Project } from "../types/project";
 import { useHttp } from "./http";
-import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
-import { useProjectSearchParams } from "../screens/project-list/util";
+import { QueryKey, useMutation, useQuery } from "react-query";
 import {
   useAddConfig,
   useDeleteConfig,
@@ -30,7 +29,6 @@ export const useEditProject = (queryKey: QueryKey) => {
 
 export const useAddProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
 
   return useMutation(
     (params: Partial<Project>) =>
@@ -44,7 +42,6 @@ export const useAddProject = (queryKey: QueryKey) => {
 
 export const useDeleteProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
 
   return useMutation(
     ({ id }: { id: number }) =>

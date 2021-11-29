@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react";
 import * as auth from "../auth-provider";
-import { User } from "../screens/project-list/SearchPanel";
+import { User } from "../types/user";
 import { useMount } from "../utils";
 import { useAsync } from "../utils/useAsync";
 import { FullPageErrorFallback, FullPageLoading } from "../components/lib";

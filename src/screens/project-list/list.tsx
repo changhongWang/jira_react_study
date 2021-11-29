@@ -8,7 +8,8 @@
 import { Dropdown, Table, TableProps, Menu, Modal } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import { User } from "./SearchPanel";
+import { Project } from "../../types/project";
+import { User } from "../../types/user";
 import { Pin } from "../../components/Pin";
 import { useEditProject } from "../../utils/project";
 import { NoPaddingButton } from "../../components/lib";
@@ -21,7 +22,6 @@ interface ListProps extends TableProps<Project> {
 
 export const List = ({ userList, ...props }: ListProps) => {
   const { mutate } = useEditProject(useProjectQueryKey());
-  const { startEdit } = useProjectModal();
   const pinProject = (id: number) => (pin: boolean) => {
     mutate({ id, pin });
   };
