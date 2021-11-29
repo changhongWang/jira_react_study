@@ -15,16 +15,6 @@ import { NoPaddingButton } from "../../components/lib";
 import { useProjectModal, useProjectQueryKey } from "./util";
 import { useDeleteConfig } from "../../utils/useOptimisticOptions";
 
-// 接口
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number;
-}
-
 interface ListProps extends TableProps<Project> {
   userList: User[];
 }
