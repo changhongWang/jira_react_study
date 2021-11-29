@@ -14,18 +14,20 @@ import { TestUndo } from "./screens/TestUndo";
 
 const AuthenticatedApp = () => {
   return (
-    <div>
+    <Container>
       <Router>
         <PageHeader />
-        <Routes>
-          <Route path="/projects" element={<ProjectListScreen />} />
-          <Route path="/projects/:id/*" element={<ProjectScreen />} />
-          <Route path="/test" element={<TestUndo />} />
-        </Routes>
+        <Main>
+          <Routes>
+            <Route path="/projects" element={<ProjectListScreen />} />
+            <Route path="/projects/:id/*" element={<ProjectScreen />} />
+            <Route path="/test" element={<TestUndo />} />
+          </Routes>
+        </Main>
 
         <ProjectModal />
       </Router>
-    </div>
+    </Container>
   );
 };
 
@@ -84,6 +86,12 @@ const TopMenuListItem = styled.li`
   width: 4rem;
 `;
 
+const Container = styled.div`
+  display: grid;
+  grid-template-rows: 6rem 1fr;
+  height: 100vh;
+`;
+
 const Header = styled.header`
   padding: 3.2rem;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
@@ -93,4 +101,9 @@ const Header = styled.header`
   flex-direction: row;
   align-items: center;
   height: 5rem;
+`;
+
+const Main = styled.div`
+  display: flex;
+  overflow: hidden;
 `;

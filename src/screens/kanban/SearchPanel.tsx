@@ -40,7 +40,7 @@ export const SearchPanel = () => {
           setSearchParams({ typeId: val });
         }}
       />
-      <Button onClick={reset}>清空</Button>
+      <Button onClick={reset}>清除筛选器</Button>
     </Row>
   );
 };
