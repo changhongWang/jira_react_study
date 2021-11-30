@@ -9,6 +9,7 @@ import { SearchPanel } from "./SearchPanel";
 import { ScreenContainer } from "../../components/lib";
 import { useTasks } from "../../utils/task";
 import { CreateKanban } from "./CreateKanban";
+import { TaskEditModal } from "./TaskEditModal";
 
 export const Kanban = () => {
   useDocumentTitle("看板列表");
@@ -34,6 +35,7 @@ export const Kanban = () => {
           <CreateKanban />
         </ColumnContainer>
       )}
+      <TaskEditModal />
     </ScreenContainer>
   );
 };
