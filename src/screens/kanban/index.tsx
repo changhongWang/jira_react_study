@@ -1,6 +1,8 @@
 import React from "react";
 import { Spin } from "antd";
 import styled from "@emotion/styled";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Drop, DropChild, Drag } from "../../components/drag-and-drop";
 import { useDocumentTitle } from "../../utils";
 import { useKanbans } from "../../utils/kanban";
 import { useKanbanSearchParams, useProjectInUrl } from "./util";
@@ -22,25 +24,41 @@ export const Kanban = () => {
 
   const isLoading = kanbanIsLoading || taskIsLoading;
   return (
-    <ScreenContainer>
-      <h1>{currentProject?.name}看板</h1>
-      <SearchPanel />
-      {isLoading ? (
-        <Spin size="large" />
-      ) : (
-        <ColumnContainer>
-          {kanbans?.map((kanban) => {
-            return <KanbanColumn kanban={kanban} key={kanban.id} />;
-          })}
-          <CreateKanban />
-        </ColumnContainer>
-      )}
-      <TaskEditModal />
-    </ScreenContainer>
+    <DragDropContext
+      onDragEnd={() => {
+        // 一般是持久化的代码
+      }}
+    >
+      <ScreenContainer>
+        <h1>{currentProject?.name}看板</h1>
+        <SearchPanel />
+        {isLoading ? (
+          <Spin size="large" />
+        ) : (
+          <Drop type="COLUMN" direction="horizontal" droppableId={"kanban"}>
+            <ColumnContainer>
+              {kanbans?.map((kanban, index) => {
+                return (
+                  <Drag
+                    key={kanban.id}
+                    draggableId={"kanban" + kanban.id}
+                    index={index}
+                  >
+                    <KanbanColumn kanban={kanban} key={kanban.id} />
+                  </Drag>
+                );
+              })}
+              <CreateKanban />
+            </ColumnContainer>
+          </Drop>
+        )}
+        <TaskEditModal />
+      </ScreenContainer>
+    </DragDropContext>
   );
 };
 
-const ColumnContainer = styled.div`
+const ColumnContainer = styled(DropChild)`
   display: flex;
   overflow-x: scroll;
   flex: 1;
