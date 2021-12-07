@@ -33,7 +33,9 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build -r git@github.com:changhongWang/changhongWang.github.io.git -b master"
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +62,7 @@
     "@types/qs": "^6.9.7",
     "@types/react-beautiful-dnd": "^13.1.2",
     "eslint-config-prettier": "^8.3.0",
+    "gh-pages": "^3.2.3",
     "husky": ">=6",
     "json-server": "^0.17.0",
     "lint-staged": ">=10",
