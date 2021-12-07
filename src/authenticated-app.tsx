@@ -9,6 +9,7 @@ import ProjectListScreen from "./screens/project-list";
 import { ProjectScreen } from "./screens/project";
 import { ProjectModal } from "./screens/project-list/project-modal";
 import { ProjectPopOver } from "./components/ProjectPopOver";
+import { UserPopOver } from "./components/UserPopOver";
 import { NoPaddingButton } from "./components/lib";
 import { TestUndo } from "./screens/TestUndo";
 
@@ -45,7 +46,9 @@ const PageHeader = () => {
           <TopMenuListItem>
             <ProjectPopOver />
           </TopMenuListItem>
-          <TopMenuListItem>用户</TopMenuListItem>
+          <TopMenuListItem>
+            <UserPopOver />
+          </TopMenuListItem>
         </TopMenuList>
       </CommonFlex>
       <Dropdown
