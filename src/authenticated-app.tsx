@@ -23,9 +23,9 @@ const AuthenticatedApp = () => {
             <Route path="/projects" element={<ProjectListScreen />} />
             <Route path="/projects/:id/*" element={<ProjectScreen />} />
             <Route path="/test" element={<TestUndo />} />
+            <Route path="/" element={<ProjectListScreen />} />
           </Routes>
         </Main>
-
         <ProjectModal />
       </Router>
     </Container>
@@ -107,6 +107,5 @@ const Header = styled.header`
 `;
 
 const Main = styled.div`
-  display: flex;
   overflow: hidden;
 `;
