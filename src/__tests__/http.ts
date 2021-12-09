@@ -28,5 +28,6 @@ test("http方法发送异步请求", async () => {
   );
 
   const result = await http(endPoint);
+
   expect(result).toEqual(mockResult);
 });
