@@ -22,12 +22,30 @@ test("http方法发送异步请求", async () => {
   const mockResult = { mockValue: "mock" };
 
   server.use(
+    // msw 用于进行单元测试的mock
     rest.get(`${apiUrl}/${endPoint}`, (req, res, ctx) =>
       res(ctx.json(mockResult))
     )
   );
 
   const result = await http(endPoint);
-
   expect(result).toEqual(mockResult);
+});
+
+test("http请求会在header里带上token", async () => {
+  const token = "FAKE_TOKEN";
+  const endPoint = "test-endpoint";
+  const mockResult = { mockValue: "mock" };
+
+  let request: any;
+
+  server.use(
+    rest.get(`${apiUrl}/${endPoint}`, (req, res, ctx) => {
+      request = req;
+      return res(ctx.json(mockResult));
+    })
+  );
+
+  await http(endPoint, { token });
+  expect(request.headers.get("Authorization")).toBe(`Bearer ${token}`);
 });
