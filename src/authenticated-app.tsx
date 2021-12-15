@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router";
-import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Dropdown, Menu, Button } from "antd";
 import { useAuth } from "./context/auth-context";
@@ -16,18 +15,16 @@ import { TestUndo } from "./screens/TestUndo";
 const AuthenticatedApp = () => {
   return (
     <Container>
-      <Router>
-        <PageHeader />
-        <Main>
-          <Routes>
-            <Route path="/projects" element={<ProjectListScreen />} />
-            <Route path="/projects/:id/*" element={<ProjectScreen />} />
-            <Route path="/test" element={<TestUndo />} />
-            <Route path="/" element={<ProjectListScreen />} />
-          </Routes>
-        </Main>
-        <ProjectModal />
-      </Router>
+      <PageHeader />
+      <Main>
+        <Routes>
+          <Route path="/projects" element={<ProjectListScreen />} />
+          <Route path="/projects/:id/*" element={<ProjectScreen />} />
+          <Route path="/test" element={<TestUndo />} />
+          <Route path="/" element={<ProjectListScreen />} />
+        </Routes>
+      </Main>
+      <ProjectModal />
     </Container>
   );
 };
